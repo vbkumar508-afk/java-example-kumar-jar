@@ -168,7 +168,7 @@ FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
-COPY target/java-example-demo-1.0.0.jar app.jar
+COPY target/demo-java-example-demo-1.0.0.jar app.jar
 
 EXPOSE 8085
 
@@ -228,7 +228,7 @@ mvn clean install
 
 Run the JAR
 ```bash
-java -jar target/java-example-demo-1.0.0.jar
+java -jar target/demo-java-example-demo-1.0.0.jar
 ```
 
 ## Build using Gradle
@@ -238,7 +238,7 @@ gradle clean build
 
 Run the JAR
 ```bash
-java -jar build/libs/java-example-demo-1.0.0.jar
+java -jar build/libs/demo-java-example-demo-1.0.0.jar
 ```
 
 ## Build Docker Image
