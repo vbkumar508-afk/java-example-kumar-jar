@@ -36,11 +36,10 @@
         </dependency>
     </dependencies>
 
-<<<<<<< HEAD
+
          <build>
-=======
+
         <build>
->>>>>>> e9b5a71 (Fixed Maven compiler plugin)
     <finalName>${project.artifactId}-${project.version}</finalName>
 
     <plugins>
@@ -71,10 +70,6 @@
         </plugin>
 
     </plugins>
-<<<<<<< HEAD
 </build>
-         
-=======
 </build> 
->>>>>>> e9b5a71 (Fixed Maven compiler plugin)
 </project>
