@@ -1,9 +1,14 @@
-FROM eclipse-temurin:21-jdk
+FROM maven
 
 WORKDIR /app
 
-COPY target/java-example-demo-1.0.0.jar app.jar
+COPY . .
 
-EXPOSE 8085
+RUN mvn clean package
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java","-jar","target/java-example-demo-1.0.0.jar"]
+
+#COPY target/java-example-demo-1.0.0.jar app.jar
+
+
+#CMD ["java", "-jar", "app.jar"]
