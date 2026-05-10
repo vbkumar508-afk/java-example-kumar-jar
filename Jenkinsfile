@@ -28,13 +28,13 @@ pipeline {
         stage('3. Trivy Image Scan') {
             steps {
                 sh '''
-    mkdir -p $HOME/trivy-cache
+    wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
 
     trivy image \
-    --scanners vuln \
-    --cache-dir $HOME/trivy-cache \
-    --no-progress \
-    java25-demo-app:$BUILD_NUMBER
+    --format template \
+    --template "@html.tpl" \
+    -o trivy-image-report.html \
+    java25-demo-app:${BUILD_NUMBER}
 '''
             }
         }
