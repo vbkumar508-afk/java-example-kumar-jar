@@ -29,8 +29,17 @@ pipeline {
 
         stage('Trivy Scan') {
     steps {
-        sh 'trivy image --scanners vuln $IMAGE_NAME:$IMAGE_TAG'
-    }
+
+	sh '''
+                    wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
+
+                    trivy image \
+                    --format template \
+                    --template "@html.tpl" \
+                    -o trivy-image-report.html \
+                    $IMAGE_NAME:$IMAGE_TAG
+                '''
+     }
 }
 
         stage('Login to AWS ECR'){
@@ -73,6 +82,12 @@ pipeline {
                 $ECR_REPO:$IMAGE_TAG
                 '''
             }
+        }
+    }
+post {
+        always {
+            archiveArtifacts artifacts: '*.html', fingerprint: true
+    
         }
     }
 }
