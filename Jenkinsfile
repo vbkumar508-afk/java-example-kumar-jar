@@ -27,19 +27,21 @@ pipeline {
             }
         }
 
-        stage('Trivy Scan') {
+       stage('Trivy Scan') {
     steps {
+        sh '''
+        mkdir -p /var/tmp/trivy
 
-	sh '''
-                    wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
+        export TMPDIR=/var/tmp/trivy
 
-                    trivy image \
-                    --format template \
-                    --template "@html.tpl" \
-                    -o trivy-image-report.html \
-                    $IMAGE_NAME:$IMAGE_TAG
-                '''
-     }
+        trivy image \
+        --scanners vuln \
+        --format template \
+        --template "@html.tpl" \
+        -o trivy-image-report.html \
+        kumar-java-app:v1
+        '''
+    }
 }
 
         stage('Login to AWS ECR'){
@@ -84,10 +86,5 @@ pipeline {
             }
         }
     }
-post {
-        always {
-            archiveArtifacts artifacts: '*.html', fingerprint: true
-    
-        }
-    }
+
 }
