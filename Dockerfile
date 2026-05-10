@@ -6,7 +6,7 @@ COPY . .
 
 RUN mvn clean package
 
-CMD ["java","-jar","target/java-example-demo-1.0.0.jar"]
+CMD ["java","-jar","target/demo-java-example-demo-1.0.0.jar"]
 
 #COPY target/java-example-demo-1.0.0.jar app.jar
 
