@@ -27,12 +27,15 @@ pipeline {
             }
         }
 
-       stage('Trivy Scan') {
+      stage('Trivy Scan') {
     steps {
         sh '''
         mkdir -p /var/tmp/trivy
 
         export TMPDIR=/var/tmp/trivy
+
+        wget -O html.tpl \
+        https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
 
         trivy image \
         --scanners vuln \
