@@ -14,6 +14,7 @@ pipeline {
     stages {
         stage('Checkout'){
             steps{
+		cleanWs()
                 git branch: 'main', url: 'https://github.com/vbkumar508-afk/java-example-kumar-jar.git'
             }
         }
