@@ -30,15 +30,17 @@ pipeline {
         sh '''
             set -e
 
-            # Safe cache location (Jenkins user space)
+            # Create safe directories
             mkdir -p $HOME/trivy-cache
+            mkdir -p $HOME/trivy-tmp
 
-            # Run scan (NO Java DB reinstall issues)
+            # Force Trivy to NOT use /tmp
+            export TMPDIR=$HOME/trivy-tmp
+
             trivy image \
                 --scanners vuln \
                 --cache-dir $HOME/trivy-cache \
                 --no-progress \
-                --skip-db-update=false \
                 java25-demo-app:$BUILD_NUMBER
         '''
     }
