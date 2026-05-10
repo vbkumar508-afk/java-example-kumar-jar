@@ -28,9 +28,11 @@ pipeline {
         stage('3. Trivy Image Scan') {
             steps {
                 sh '''
+    mkdir -p /var/lib/trivy-cache
+
     trivy image \
     --scanners vuln \
-    --cache-dir /tmp/trivy \
+    --cache-dir /var/lib/trivy-cache \
     --no-progress \
     java25-demo-app:$BUILD_NUMBER
 '''
