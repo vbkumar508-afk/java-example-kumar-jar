@@ -42,6 +42,8 @@ pipeline {
                 --cache-dir $HOME/trivy-cache \
                 --no-progress \
                 java25-demo-app:$BUILD_NUMBER
+
+                ls -lah trivy-image-report.html
         '''
     }
 }
