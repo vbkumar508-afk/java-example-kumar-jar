@@ -31,7 +31,6 @@ pipeline {
     trivy image \
     --scanners vuln \
     --cache-dir /tmp/trivy \
-    --skip-db-update \
     --no-progress \
     java25-demo-app:$BUILD_NUMBER
 '''
