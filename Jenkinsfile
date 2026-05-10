@@ -30,20 +30,28 @@ pipeline {
         sh '''
             set -e
 
-            # Create safe directories
+            echo "Workspace: $(pwd)"
+            ls -lah
+
             mkdir -p $HOME/trivy-cache
             mkdir -p $HOME/trivy-tmp
-
-            # Force Trivy to NOT use /tmp
             export TMPDIR=$HOME/trivy-tmp
+
+            IMAGE="java25-demo-app:$BUILD_NUMBER"
+
+            echo "Scanning image: $IMAGE"
+
+            docker images | grep java25-demo-app || true
 
             trivy image \
                 --scanners vuln \
                 --cache-dir $HOME/trivy-cache \
                 --no-progress \
-                java25-demo-app:$BUILD_NUMBER
+                -o trivy-image-report.html \
+                $IMAGE
 
-                ls -lah trivy-image-report.html
+            echo "Checking report file..."
+            ls -lah trivy-image-report.html || true
         '''
     }
 }
