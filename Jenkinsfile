@@ -37,6 +37,7 @@ trivy image \
 -o trivy-image-report.html \
 java25-demo-app:${BUILD_NUMBER}
 '''
+
     }
 }
             }
