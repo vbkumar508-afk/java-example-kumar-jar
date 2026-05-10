@@ -107,9 +107,9 @@ pipeline {
 
                     docker run -d \
                     --name java25-container \
-                    -p 8085:8085 \
+                    -p 8085:8080 \
                     $ECR_REPO:$BUILD_NUMBER \
-                    java -jar target/java-example-demo-1.0.0.jar
+                    
                 '''
             }
         }
