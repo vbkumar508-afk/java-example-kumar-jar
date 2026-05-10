@@ -25,19 +25,22 @@ pipeline {
             }
         }
 
-        stage('3. Trivy Image Scan') {
-            steps {
+        stage('Trivy Image Scan') {
     steps {
         sh '''
-wget
-https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
-trivy image \
---format template \
---template "@html.tpl" \
--o trivy-image-report.html \
-java25-demo-app:${BUILD_NUMBER}
-'''
+            set -e
 
+            # Safe cache location (Jenkins user space)
+            mkdir -p $HOME/trivy-cache
+
+            # Run scan (NO Java DB reinstall issues)
+            trivy image \
+                --scanners vuln \
+                --cache-dir $HOME/trivy-cache \
+                --no-progress \
+                --skip-db-update=false \
+                java25-demo-app:$BUILD_NUMBER
+        '''
     }
 }
             }
