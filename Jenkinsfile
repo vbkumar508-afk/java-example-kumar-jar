@@ -27,7 +27,6 @@ pipeline {
 
         stage('3. Trivy Image Scan') {
             steps {
-                stage('Trivy Scan') {
     steps {
         sh '''
         # 1. Clear out old failed attempts from /tmp
@@ -52,7 +51,7 @@ pipeline {
     }
 }
             }
-        }
+        
 
         stage('4. AWS ECR Login') {
             steps {
