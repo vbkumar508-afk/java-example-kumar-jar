@@ -27,15 +27,30 @@ pipeline {
 
         stage('3. Trivy Image Scan') {
             steps {
-                sh '''
-    wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
+                stage('Trivy Scan') {
+    steps {
+        sh '''
+        # 1. Clear out old failed attempts from /tmp
+        sudo rm -rf /tmp/trivy-* || true
 
-    trivy image \
-    --format template \
-    --template "@html.tpl" \
-    -o trivy-image-report.html \
-    java25-demo-app:${BUILD_NUMBER}
-'''
+        # 2. Point Trivy to the workspace (which has 11GB free) 
+        # instead of the tiny 1.9GB RAM disk (/tmp)
+        export TMPDIR=${WORKSPACE}/.trivycache
+        mkdir -p $TMPDIR
+
+        # 3. Use the EXACT variables from your Build stage
+        # Use --pkg-types os to avoid the heavy Java DB if space is tight
+        trivy image \
+        --cache-dir $TMPDIR \
+        --pkg-types os \
+        --scanners vuln \
+        --format template \
+        --template "@html.tpl" \
+        -o trivy-image-report.html \
+        ${IMAGE_NAME}:${IMAGE_TAG}
+        '''
+    }
+}
             }
         }
 
