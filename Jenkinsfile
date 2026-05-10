@@ -43,7 +43,7 @@ pipeline {
         '''
     }
 }
-            }
+            
         
 
         stage('4. AWS ECR Login') {
