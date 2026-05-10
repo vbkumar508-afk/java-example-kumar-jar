@@ -26,11 +26,11 @@ pipeline {
             }
         }
 
-        stage('Trivy Scan'){
-            steps{
-                sh 'trivy image $IMAGE_NAME:$IMAGE_TAG'
-            }
-        }
+        stage('Trivy Scan') {
+    steps {
+        sh 'trivy image --scanners vuln $IMAGE_NAME:$IMAGE_TAG'
+    }
+}
 
         stage('Login to AWS ECR'){
             steps{
