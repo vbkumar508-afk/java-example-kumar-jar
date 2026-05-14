@@ -74,7 +74,7 @@ pipeline {
 
                     docker run -d \
                     --name new_image-container \
-                    -p 8083:8080 \
+                    -p 8083:8085 \
                     $ECR_REPO:$BUILD_NUMBER
                 '''
             }
