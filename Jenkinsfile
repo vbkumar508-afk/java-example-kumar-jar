@@ -69,8 +69,8 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 sh '''
-                    docker stop java25-container || true
-                    docker rm java25-container || true
+                    docker stop new_image-container || true
+                    docker rm new_image-container || true
 
                     docker run -d \
                     --name new_image-container \
