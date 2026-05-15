@@ -1,0 +1,22 @@
+#Stage 1
+FROM maven AS build
+
+RUN git clone https://github.com/vbkumar508-afk/java-example-kumar-jar.git
+
+WORKDIR /java-example-kumar-jar
+
+RUN mvn clean package
+
+
+#Stage 2
+
+
+FROM eclipse-temurin:21-jdk
+
+WORKDIR /app
+
+COPY --from=build /java-example-kumar-jar/target/demo-java-example-demo-1.0.0.jar app.jar
+
+EXPOSE 8080
+
+CMD ["java", "-jar","/app.jar"]
