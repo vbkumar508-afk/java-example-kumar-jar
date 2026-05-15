@@ -19,4 +19,4 @@ COPY --from=build /java-example-kumar-jar/target/demo-java-example-demo-1.0.0.ja
 
 EXPOSE 8080
 
-CMD ["java", "-jar","/app.jar"]
+CMD ["java", "-jar","app.jar"]
